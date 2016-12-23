@@ -39,14 +39,4 @@ public class ExternalProductServiceImpl implements ExternalProductService{
         String productName = jsonObject.getJSONObject("product_composite_response").getJSONArray("items").getJSONObject(0).getString("general_description");
         return productName;
     }
-
-//    @Override
-//    public CurrentPrice findProductPrice(String productId) {
-//        fields = "?fields=pricing";
-//        serviceUrl = externalUrl + productId + fields + key;
-//        String result = restTemplate.getForObject(serviceUrl, String.class);
-//        JSONObject jsonObject = new JSONObject(result);
-//        String price = jsonObject.getJSONObject("product_composite_response").getJSONArray("items").getJ
-//    }
-
 }

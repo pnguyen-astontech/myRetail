@@ -37,8 +37,6 @@ public class SeedData implements ApplicationListener<ContextRefreshedEvent> {
 
     private void generateData() {
 
-        List<Product> productList = new ArrayList<Product>();
-
         CurrentPrice currentPrice = new CurrentPrice();
         currentPrice.setValue(13.49);
         currentPrice.setCurrency_code("USD");
