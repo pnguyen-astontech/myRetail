@@ -5,7 +5,7 @@
     MongoDB
     
 ## Notes:    
-    Build, run and deploy, test using maven.
+    Build, run, deploy, and test using maven.
     Ensure mongodb is running before deploying.
     
     Only seeded data for product id : 13860428 and 16696652.
