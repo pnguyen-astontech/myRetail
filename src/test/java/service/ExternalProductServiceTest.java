@@ -26,7 +26,7 @@ public class ExternalProductServiceTest {
 
     @Test
     public void externalGetProductNameTest() {
-        String name = externalProductService.findProductName("13860428");
+        String name = externalProductService.findProductName("13860428").getGeneralDescription();
         assertEquals("Blu-ray BIG LEBOWSKI, THE Movies", name);
     }
 

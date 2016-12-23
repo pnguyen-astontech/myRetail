@@ -1,10 +1,12 @@
 package com.company.services.impl;
 
 import com.company.domains.CurrentPrice;
+import com.company.domains.ProductDTO;
 import com.company.services.ExternalProductService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,13 +16,16 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ExternalProductServiceImpl implements ExternalProductService{
 
-
     private RestTemplate restTemplate;
 
-    private String serviceUrl;
+    @Value("${external.api.fields}")
     private String fields;
-    private String externalUrl = "https://api.target.com/products/v3/";
-    private String key = "&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz" ;
+
+    @Value("${external.api.resource}")
+    private String externalResource;
+
+    @Value("${external.api.key}")
+    private String key;
 
     // TODO: Not best practice, should refactor.
     public ExternalProductServiceImpl() {
@@ -29,14 +34,20 @@ public class ExternalProductServiceImpl implements ExternalProductService{
 
     // TODO: Ideally we would create a DTO that represents the external api response.
     @Override
-    public String findProductName(String productId) {
-        // TODO: Create method for url construction and not hard code url.
-        fields = "?fields=descriptions";
-        serviceUrl =  externalUrl + productId + fields + key;
+    public ProductDTO findProductName(String productId) {
 
-        String result = restTemplate.getForObject(serviceUrl, String.class);
-        JSONObject jsonObject = new JSONObject(result);
-        String productName = jsonObject.getJSONObject("product_composite_response").getJSONArray("items").getJSONObject(0).getString("general_description");
-        return productName;
+        String result = restTemplate.getForObject(buildServiceUrl(productId), String.class);
+        return convertResponseToDTO(new JSONObject(result));
+    }
+
+    // TODO:  This converter method needs to be expanded to the full structure of the external API data structure
+    public ProductDTO convertResponseToDTO(JSONObject response) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setGeneralDescription(response.getJSONObject("product_composite_response").getJSONArray("items").getJSONObject(0).getString("general_description"));
+        return productDTO;
+    }
+
+    public String buildServiceUrl(String productId) {
+        return externalResource + productId + fields + key;
     }
 }

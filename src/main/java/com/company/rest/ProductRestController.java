@@ -35,7 +35,7 @@ public class ProductRestController {
         product.setCurrent_price(mongoCurrentPriceRepository.findOne(product.getCurrent_price().getId()));
 
         // Set product name from external api call using "general_description"
-        product.setName(externalProductService.findProductName(Long.toString(id)));
+        product.setName(externalProductService.findProductName(Long.toString(id)).getGeneralDescription());
         return product;
     }
 
@@ -47,7 +47,7 @@ public class ProductRestController {
         mongoCurrentPriceRepository.save(currentPrice);
 
         // Set product name from external api call using "general_description"
-        product.setName(externalProductService.findProductName(Long.toString(id)));
+        product.setName(externalProductService.findProductName(Long.toString(id)).getGeneralDescription());
 
         return product;
     }
