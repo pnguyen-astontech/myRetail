@@ -1,8 +1,14 @@
 # Retail Case Study
 
-# Requires:
+## Requires:
+    Maven
     MongoDB
+    
+## Notes:    
+    Build, run and delopy, test using maven.
+    Ensure mongodb is runing before delopying.
 
-# Notes:
-
-# Issues:
+## Issues:
+    Unable to locate product name from external api, instead used "general description".
+    Some area should be refactored, not best practice.
+    
